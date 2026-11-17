@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description"
+    content="Celebrate the magic of Christmas with warm wishes, beautiful moments, and festive memories.">
+  <meta name="theme-color" content="#173D30">
+
+  <title>Merry Christmas | A Season Wrapped in Wonder</title>
+
+  <!-- CSS -->
+  <!-- GOOGLE FONTS -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="./css/base.css">
+  <link rel="stylesheet" href="./css/layout.css">
+  <link rel="stylesheet" href="./css/components.css">
+  <link rel="stylesheet" href="./css/animations.css">
+
+  <!-- JavaScript -->
+  <script type="module" src="./js/main.js"></script>
+</head>
+
+<body>
+
+  <!-- SNOWFALL EFFECT -->
+  <div class="snowfall" id="snowfall" aria-hidden="true">
+  </div>
+
+  <!-- HEADER & NAVIGATION -->
+  <header class="site-header" id="site-header">
+    <div class="container header__container">
+      <!-- Logo -->
+      <a href="#home" class="logo" aria-label="Christmas home">
+        <span class="logo__icon">✦</span>
+        <span class="logo__text">Christmas</span>
+      </a>
+      <!-- Mobile Menu Button -->
+      <button class="menu-toggle" id="menu-toggle" type="button" aria-label="Open navigation menu" aria-expanded="false"
+        aria-controls="primary-navigation">
+        <span class="menu-toggle__line"></span>
+        <span class="menu-toggle__line"></span>
+        <span class="menu-toggle__line"></span>
+      </button>
+
+      <!-- Navigation -->
+      <nav class="navigation" id="primary-navigation" aria-label="Main navigation">
+        <ul class="navigation__list">
+          <li class="navigation__item">
+            <a href="#home" class="navigation__link">
+              Home
+            </a>
+          </li>
+          <li class="navigation__item">
+            <a href="#countdown" class="navigation__link">
+              The Season
+            </a>
+          </li>
+          <li class="navigation__item">
+            <a href="#wishes" class="navigation__link">
+              Wishes
+            </a>
+          </li>
+          <li class="navigation__item">
+            <a href="#gallery" class="navigation__link">
+              Gallery
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main>
+    <!-- HERO SECTION -->
+    <section class="hero" id="home">
+      <div class="container hero__container">
+        <!-- Hero Content -->
+        <div class="hero__content">
+          <span class="hero__eyebrow">
+            The Most Wonderful Time of the Year
+          </span>
+          <h1 class="hero__title">
+            Merry
+            <span>Christmas</span>
+          </h1>
+          <p class="hero__description">
+            A season filled with warmth, joy, and wonder.
+            May your days be bright and your heart be full
+            of Christmas magic.
+          </p>
+          <div class="hero__actions">
+            <a href="#countdown" class="button button--primary">
+              Discover the Magic
+            </a>
+            <a href="#wishes" class="button button--secondary">
+              Create a Wish
+            </a>
+          </div>
+        </div>
+
+        <!-- Hero Visual -->
+        <div class="hero__visual">
+          <img src="./assets/images/Noel-tree.png"
+            alt="A beautifully decorated Christmas tree surrounded by warm golden lights" class="hero__image"
+            fetchpriority="high">
+        </div>
+      </div>
+
+      <!-- Scroll Indicator -->
+      <a href="#countdown" class="hero__scroll" aria-label="Scroll to countdown section">
+        <span>Scroll to explore</span>
+        <span class="hero__scroll-icon">↓</span>
+      </a>
+    </section>
+
+    <!-- CHRISTMAS COUNTDOWN -->
+    <section class="countdown section" id="countdown">
+      <div class="container countdown__container">
+        <!-- Section Heading -->
+        <div class="section-heading">
+          <span class="section-heading__eyebrow">
+            A Special Moment Is Coming
+          </span>
+          <h2 class="section-heading__title">
+            The Most Wonderful Time of the Year
+          </h2>
+          <p class="section-heading__description">
+            Every moment brings us closer to the magic
+            of Christmas.
+          </p>
+        </div>
+
+        <!-- Countdown Timer -->
+        <div class="countdown__timer" id="countdown-timer" aria-label="Time remaining until Christmas">
+          <!-- Days -->
+          <div class="countdown__item">
+            <div class="countdown__number">
+              <span id="countdown-days">00</span>
+            </div>
+            <span class="countdown__label">
+              Days
+            </span>
+          </div>
+          <!-- Hours -->
+          <div class="countdown__item">
+            <div class="countdown__number">
+              <span id="countdown-hours">00</span>
+            </div>
+            <span class="countdown__label">
+              Hours
+            </span>
+          </div>
+          <!-- Minutes -->
+          <div class="countdown__item">
+            <div class="countdown__number">
+              <span id="countdown-minutes">00</span>
+            </div>
+            <span class="countdown__label">
+              Minutes
+            </span>
+          </div>
+          <!-- Seconds -->
+          <div class="countdown__item">
+            <div class="countdown__number">
+              <span id="countdown-seconds">00</span>
+            </div>
+            <span class="countdown__label">
+              Seconds
+            </span>
+          </div>
+        </div>
+
+        <!-- Countdown Message -->
+        <p class="countdown__message" id="countdown-message" aria-live="polite">
+          Christmas is on its way!
+        </p>
+      </div>
+    </section>
+    <!-- 03. CHRISTMAS WISH STUDIO -->
+    <section class="wishes section" id="wishes">
+      <div class="container wishes__container">
+        <!-- Section Heading -->
+        <div class="section-heading">
+          <span class="section-heading__eyebrow">
+            Share the Joy
+          </span>
+          <h2 class="section-heading__title">
+            Send a Little Christmas Magic
+          </h2>
+          <p class="section-heading__description">
+            Create a heartfelt Christmas wish
+            and share a little happiness with someone special.
+          </p>
+        </div>
+
+        <!-- Wish Studio Content -->
+        <div class="wish-studio">
+          <!-- Wish Form -->
+          <div class="wish-studio__form-wrapper">
+            <h3 class="wish-studio__title">
+              Create Your Christmas Wish
+            </h3>
+            <form class="wish-form" id="wish-form">
+              <!-- Recipient -->
+              <div class="form-group">
+                <label for="wish-recipient" class="form-label">
+                  Who is this wish for?
+                </label>
+                <select id="wish-recipient" name="recipient" class="form-control" required>
+                  <option value="family">
+                    Family
+                  </option>
+                  <option value="friend">
+                    Friend
+                  </option>
+                  <option value="someone special">
+                    Someone Special
+                  </option>
+                </select>
+              </div>
+
+              <!-- Recipient Name -->
+              <div class="form-group">
+                <label for="wish-name" class="form-label">
+                  Recipient's Name
+                  <span>(Optional)</span>
+                </label>
+                <input type="text" id="wish-name" name="name" class="form-control" placeholder="Enter a name..."
+                  maxlength="40">
+              </div>
+
+              <!-- Message Mood -->
+              <div class="form-group">
+                <label for="wish-mood" class="form-label">
+                  Choose Your Christmas Mood
+                </label>
+                <select id="wish-mood" name="mood" class="form-control" required>
+                  <option value="warm">
+                    Warm & Cozy
+                  </option>
+                  <option value="festive">
+                    Joyful & Festive
+                  </option>
+                  <option value="heartfelt">
+                    Heartfelt & Meaningful
+                  </option>
+                </select>
+              </div>
+
+              <!-- Generate Button -->
+              <button type="submit" class="button button--primary wish-form__submit">
+                Generate My Wish
+              </button>
+            </form>
+          </div>
+
+          <!-- Wish Preview -->
+          <div class="wish-preview">
+            <div class="wish-preview__card" id="wish-output">
+              <span class="wish-preview__decoration">
+                ✦
+              </span>
+              <span class="wish-preview__eyebrow">
+                A Christmas Message
+              </span>
+              <h3 class="wish-preview__title">
+                Merry Christmas!
+              </h3>
+
+              <p class="wish-preview__message" id="wish-message">
+                Your Christmas wish will appear here.
+                Create a special message and share
+                the magic of Christmas!
+              </p>
+              <span class="wish-preview__signature">
+                With Love, Christmas
+              </span>
+            </div>
+
+            <!-- Wish Actions -->
+            <div class="wish-preview__actions">
+              <button type="button" class="button button--secondary" id="wish-copy" disabled>
+                Copy Wish
+              </button>
+              <button type="button" class="button button--primary" id="wish-share" disabled>
+                Share Wish
+              </button>
+            </div>
+            <!-- Action Feedback -->
+            <p class="wish-preview__feedback" id="wish-feedback" role="status" aria-live="polite">
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CHRISTMAS GALLERY -->
+    <section class="gallery section" id="gallery">
+      <div class="container gallery__container">
+        <!-- Section Heading -->
+        <div class="section-heading">
+          <span class="section-heading__eyebrow">
+            Moments to Remember
+          </span>
+          <h2 class="section-heading__title">
+            Little Moments of Christmas
+          </h2>
+          <p class="section-heading__description">
+            Discover the beauty of Christmas
+            through these little festive moments.
+          </p>
+        </div>
+
+        <!-- Gallery Grid -->
+        <div class="gallery__grid">
+          <!-- Gallery Item 01 -->
+          <figure class="gallery-card">
+            <button type="button" class="gallery-card__button" data-gallery-open
+              data-full-src="./assets/images/gallery1.png" data-caption="Warm Moments">
+              <img src="./assets/images/gallery1.png"
+                alt="A cozy Christmas living room with a fireplace and decorations" class="gallery-card__image"
+                loading="lazy">
+              <span class="gallery-card__overlay">
+                <span>View Image</span>
+              </span>
+            </button>
+            <figcaption class="gallery-card__caption">
+              <h3>Warm Moments</h3>
+              <p>Where every corner feels like home.</p>
+            </figcaption>
+          </figure>
+
+          <!-- Gallery Item 02 -->
+          <figure class="gallery-card">
+            <button type="button" class="gallery-card__button" data-gallery-open
+              data-full-src="./assets/images/gallery2.png" data-caption="Christmas Lights">
+              <img src="./assets/images/gallery2.png"
+                alt="Beautiful golden Christmas lights illuminating a festive space" class="gallery-card__image"
+                loading="lazy">
+              <span class="gallery-card__overlay">
+                <span>View Image</span>
+              </span>
+            </button>
+            <figcaption class="gallery-card__caption">
+              <h3>Christmas Lights</h3>
+              <p>A little sparkle makes everything magical.</p>
+            </figcaption>
+          </figure>
+
+          <!-- Gallery Item 03 -->
+          <figure class="gallery-card">
+            <button type="button" class="gallery-card__button" data-gallery-open
+              data-full-src="./assets/images/gallery3.png" data-caption="Wrapped With Love">
+              <img src="./assets/images/gallery3.png"
+                alt="Christmas presents wrapped in elegant red and gold ribbons" class="gallery-card__image"
+                loading="lazy">
+              <span class="gallery-card__overlay">
+                <span>View Image</span>
+              </span>
+            </button>
+            <figcaption class="gallery-card__caption">
+              <h3>Wrapped With Love</h3>
+              <p>The joy of giving and receiving.</p>
+            </figcaption>
+          </figure>
+
+          <!-- Gallery Item 04 -->
+          <figure class="gallery-card">
+            <button type="button" class="gallery-card__button" data-gallery-open
+              data-full-src="./assets/images/gallery4.png" data-caption="Winter Memories">
+              <img src="./assets/images/gallery4.png" alt="A peaceful snowy winter village decorated for Christmas"
+                class="gallery-card__image" loading="lazy">
+              <span class="gallery-card__overlay">
+                <span>View Image</span>
+              </span>
+            </button>
+            <figcaption class="gallery-card__caption">
+              <h3>Winter Memories</h3>
+              <p>Beautiful memories under the winter sky.</p>
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- GALLERY IMAGE MODAL -->
+  <dialog class="gallery-modal" id="gallery-modal" aria-label="Gallery image preview">
+    <div class="gallery-modal__content">
+      <button type="button" class="gallery-modal__close" id="gallery-modal-close" aria-label="Close image preview">
+        &times;
+      </button>
+      <img src="" alt="" class="gallery-modal__image" id="gallery-modal-image">
+      <p class="gallery-modal__caption" id="gallery-modal-caption">
+      </p>
+    </div>
+  </dialog>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="container footer__container">
+      <!-- Footer Brand -->
+      <a href="#home" class="footer__logo">
+        <span class="footer__logo-icon">✦</span>
+        <span>Christmas</span>
+      </a>
+
+      <!-- Footer Message -->
+      <p class="footer__message">
+        May the magic of Christmas stay with you, always.
+      </p>
+
+      <!-- Footer Navigation -->
+      <nav class="footer__navigation" aria-label="Footer navigation">
+        <a href="#home">Home</a>
+        <a href="#countdown">The Season</a>
+        <a href="#wishes">Wishes</a>
+        <a href="#gallery">Gallery</a>
+      </nav>
+      <!-- Divider -->
+      <div class="footer__divider"></div>
+      <!-- Copyright -->
+      <div class="footer__bottom">
+        <p>
+          © <span id="current-year">2026</span>
+          Christmas Landing Page.
+          All rights reserved.
+        </p>
+
+        <p class="footer__credit">
+          Crafted with HTML, CSS & JavaScript.
+        </p>
+      </div>
+    </div>
+  </footer>
+  <!-- NO JAVASCRIPT MESSAGE -->
+  <noscript>
+    <p class="noscript-message">
+      Please enable JavaScript to enjoy all interactive
+      Christmas experiences on this website.
+    </p>
+  </noscript>
+
+</body>
+
+</html>
