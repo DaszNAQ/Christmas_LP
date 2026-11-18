@@ -162,23 +162,23 @@ p {
   line-height: 1.7;
 }
 
-.hero__eyebrow,
-.section-heading__eyebrow,
-.wish-preview__eyebrow,
-.wish-preview__signature {
+.hero_eyebrow,
+.section-heading_eyebrow,
+.wish-preview_eyebrow,
+.wish-preview_signature {
   font-family: var(--font-accent);
   font-weight: 600;
 }
 
-.hero__title {
+.hero_title {
   font-size: clamp(3rem, 6vw, 5.5rem);
 }
 
-.section-heading__title {
+.section-heading_title {
   font-size: clamp(2rem, 4vw, 3.25rem);
 }
 
-.wish-preview__title {
+.wish-preview_title {
   font-size: clamp(2rem, 3.5vw, 3rem);
 }
 
