@@ -121,143 +121,103 @@
       </a>
     </section>
 
+
     <!-- CHRISTMAS COUNTDOWN -->
     <section class="countdown section" id="countdown">
       <div class="container countdown_container">
-        <!-- Section Heading -->
         <div class="section-heading">
-          <span class="section-heading_eyebrow">
-            A Special Moment Is Coming
-          </span>
-          <h2 class="section-heading_title">
-            The Most Wonderful Time of the Year
-          </h2>
+          <span class="section-heading_eyebrow">A Special Moment Is Coming</span>
+          <h2 class="section-heading_title">The Most Wonderful Time of the Year</h2>
           <p class="section-heading_description">
-            Every moment brings us closer to the magic
-            of Christmas.
+            Every moment brings us closer to the magic of Christmas.
           </p>
         </div>
 
-        <!-- Countdown Timer -->
-        <div class="countdown_timer" id="countdown-timer" aria-label="Time remaining until Christmas">
-          <!-- Days -->
+        <div class="countdown_timer" id="countdown-timer" role="timer" aria-label="Time remaining until Christmas">
           <div class="countdown_item">
             <div class="countdown_number">
               <span id="countdown-days">00</span>
             </div>
-            <span class="countdown_label">
-              Days
-            </span>
+            <span class="countdown_label">Days</span>
           </div>
-          <!-- Hours -->
+
           <div class="countdown_item">
             <div class="countdown_number">
               <span id="countdown-hours">00</span>
             </div>
-            <span class="countdown_label">
-              Hours
-            </span>
+            <span class="countdown_label">Hours</span>
           </div>
-          <!-- Minutes -->
+
           <div class="countdown_item">
             <div class="countdown_number">
               <span id="countdown-minutes">00</span>
             </div>
-            <span class="countdown_label">
-              Minutes
-            </span>
+            <span class="countdown_label">Minutes</span>
           </div>
-          <!-- Seconds -->
+
           <div class="countdown_item">
             <div class="countdown_number">
               <span id="countdown-seconds">00</span>
             </div>
-            <span class="countdown_label">
-              Seconds
-            </span>
+            <span class="countdown_label">Seconds</span>
           </div>
         </div>
 
-        <!-- Countdown Message -->
         <p class="countdown_message" id="countdown-message" aria-live="polite">
           Christmas is on its way!
         </p>
       </div>
     </section>
-    <!-- 03. CHRISTMAS WISH STUDIO -->
+
+    <!-- CHRISTMAS WISH STUDIO -->
     <section class="wishes section" id="wishes">
       <div class="container wishes_container">
-        <!-- Section Heading -->
         <div class="section-heading">
-          <span class="section-heading_eyebrow">
-            Share the Joy
-          </span>
-          <h2 class="section-heading_title">
-            Send a Little Christmas Magic
-          </h2>
+          <span class="section-heading_eyebrow">Share the Joy</span>
+          <h2 class="section-heading_title">Send a Little Christmas Magic</h2>
           <p class="section-heading_description">
-            Create a heartfelt Christmas wish
-            and share a little happiness with someone special.
+            Create a heartfelt Christmas wish and share a little happiness with someone special.
           </p>
         </div>
 
-        <!-- Wish Studio Content -->
         <div class="wish-studio">
           <!-- Wish Form -->
           <div class="wish-studio_form-wrapper">
-            <h3 class="wish-studio_title">
-              Create Your Christmas Wish
-            </h3>
+            <span class="wish-studio_eyebrow">MAKE IT PERSONAL</span>
+            <h3 class="wish-studio_title">Create Your Christmas Wish</h3>
+            <p class="wish-studio_description">
+              A few little details are all it takes to create a meaningful Christmas message.
+            </p>
+
             <form class="wish-form" id="wish-form">
-              <!-- Recipient -->
               <div class="form-group">
-                <label for="wish-recipient" class="form-label">
-                  Who is this wish for?
-                </label>
+                <label for="wish-recipient" class="form-label">Who is this wish for?</label>
                 <select id="wish-recipient" name="recipient" class="form-control" required>
-                  <option value="family">
-                    Family
-                  </option>
-                  <option value="friend">
-                    Friend
-                  </option>
-                  <option value="someone special">
-                    Someone Special
-                  </option>
+                  <option value="family">Family</option>
+                  <option value="friend">Friend</option>
+                  <option value="someone special">Someone Special</option>
                 </select>
               </div>
 
-              <!-- Recipient Name -->
               <div class="form-group">
                 <label for="wish-name" class="form-label">
-                  Recipient's Name
-                  <span>(Optional)</span>
+                  Recipient's Name <span>(Optional)</span>
                 </label>
                 <input type="text" id="wish-name" name="name" class="form-control" placeholder="Enter a name..."
                   maxlength="40">
               </div>
 
-              <!-- Message Mood -->
               <div class="form-group">
-                <label for="wish-mood" class="form-label">
-                  Choose Your Christmas Mood
-                </label>
+                <label for="wish-mood" class="form-label">Choose Your Christmas Mood</label>
                 <select id="wish-mood" name="mood" class="form-control" required>
-                  <option value="warm">
-                    Warm & Cozy
-                  </option>
-                  <option value="festive">
-                    Joyful & Festive
-                  </option>
-                  <option value="heartfelt">
-                    Heartfelt & Meaningful
-                  </option>
+                  <option value="warm">Warm & Cozy</option>
+                  <option value="festive">Joyful & Festive</option>
+                  <option value="heartfelt">Heartfelt & Meaningful</option>
                 </select>
               </div>
 
-              <!-- Generate Button -->
               <button type="submit" class="button button--primary wish-form_submit">
-                Generate My Wish
+                Create My Wish
               </button>
             </form>
           </div>
@@ -265,27 +225,16 @@
           <!-- Wish Preview -->
           <div class="wish-preview">
             <div class="wish-preview_card" id="wish-output">
-              <span class="wish-preview_decoration">
-                ✦
-              </span>
-              <span class="wish-preview_eyebrow">
-                A Christmas Message
-              </span>
-              <h3 class="wish-preview_title">
-                Merry Christmas!
-              </h3>
-
+              <span class="wish-preview_decoration" aria-hidden="true">✦</span>
+              <span class="wish-preview_eyebrow">A LITTLE CHRISTMAS MAGIC</span>
+              <h3 class="wish-preview_title">Merry Christmas!</h3>
+              <p class="wish-preview_to" id="wish-recipient-preview">To Someone Special</p>
               <p class="wish-preview_message" id="wish-message">
-                Your Christmas wish will appear here.
-                Create a special message and share
-                the magic of Christmas!
+                Your Christmas wish will appear here. Create a special message and share the magic of Christmas!
               </p>
-              <span class="wish-preview_signature">
-                With Love, Christmas
-              </span>
+              <span class="wish-preview_signature">With Love, Christmas</span>
             </div>
 
-            <!-- Wish Actions -->
             <div class="wish-preview_actions">
               <button type="button" class="button button--secondary" id="wish-copy" disabled>
                 Copy Wish
@@ -294,9 +243,8 @@
                 Share Wish
               </button>
             </div>
-            <!-- Action Feedback -->
-            <p class="wish-preview_feedback" id="wish-feedback" role="status" aria-live="polite">
-            </p>
+
+            <p class="wish-preview_feedback" id="wish-feedback" role="status" aria-live="polite"></p>
           </div>
         </div>
       </div>
@@ -305,141 +253,140 @@
     <!-- CHRISTMAS GALLERY -->
     <section class="gallery section" id="gallery">
       <div class="container gallery_container">
-        <!-- Section Heading -->
         <div class="section-heading">
-          <span class="section-heading_eyebrow">
-            Moments to Remember
-          </span>
-          <h2 class="section-heading_title">
-            Little Moments of Christmas
-          </h2>
+          <span class="section-heading_eyebrow">Moments to Remember</span>
+          <h2 class="section-heading_title">Little Moments of Christmas</h2>
           <p class="section-heading_description">
-            Discover the beauty of Christmas
-            through these little festive moments.
+            From cozy evenings by the fire to snowy Christmas nights, celebrate the moments that make this season
+            special.
           </p>
         </div>
 
-        <!-- Gallery Grid -->
         <div class="gallery_grid">
-          <!-- Gallery Item 01 -->
           <figure class="gallery-card">
             <button type="button" class="gallery-card_button" data-gallery-open
-              data-full-src="./assets/images/gallery1.png" data-caption="Warm Moments">
+              data-full-src="./assets/images/gallery1.png" data-caption="Warm Moments" aria-label="View Warm Moments">
               <img src="./assets/images/gallery1.png"
-                alt="A cozy Christmas living room with a fireplace and decorations" class="gallery-card_image"
+                alt="A cozy Christmas living room with a decorated tree and warm fireplace" class="gallery-card_image"
                 width="1672" height="941" loading="lazy" decoding="async">
-              <span class="gallery-card_overlay">
-                <span>View Image</span>
+              <span class="gallery-card_overlay" aria-hidden="true">
+                <span class="gallery-card_action">View Memory</span>
               </span>
             </button>
             <figcaption class="gallery-card_caption">
               <h3>Warm Moments</h3>
-              <p>Where every corner feels like home.</p>
+              <p>Where warmth, comfort, and Christmas magic come together.</p>
             </figcaption>
           </figure>
 
-          <!-- Gallery Item 02 -->
           <figure class="gallery-card">
             <button type="button" class="gallery-card_button" data-gallery-open
-              data-full-src="./assets/images/gallery2.png" data-caption="Christmas Lights">
+              data-full-src="./assets/images/gallery2.png" data-caption="Christmas Village"
+              aria-label="View Christmas Village">
               <img src="./assets/images/gallery2.png"
-                alt="Beautiful golden Christmas lights illuminating a festive space" class="gallery-card_image"
+                alt="A beautiful snowy Christmas village glowing with festive lights" class="gallery-card_image"
                 width="1672" height="941" loading="lazy" decoding="async">
-              <span class="gallery-card_overlay">
-                <span>View Image</span>
+              <span class="gallery-card_overlay" aria-hidden="true">
+                <span class="gallery-card_action">View Memory</span>
               </span>
             </button>
             <figcaption class="gallery-card_caption">
-              <h3>Christmas Lights</h3>
-              <p>A little sparkle makes everything magical.</p>
+              <h3>Christmas Village</h3>
+              <p>A little world filled with lights, snow, and holiday wonder.</p>
             </figcaption>
           </figure>
 
-          <!-- Gallery Item 03 -->
           <figure class="gallery-card">
             <button type="button" class="gallery-card_button" data-gallery-open
-              data-full-src="./assets/images/gallery3.png" data-caption="Wrapped With Love">
-              <img src="./assets/images/gallery3.png" alt="Christmas presents wrapped in elegant red and gold ribbons"
+              data-full-src="./assets/images/gallery3.png" data-caption="A Christmas Feast"
+              aria-label="View A Christmas Feast">
+              <img src="./assets/images/gallery3.png"
+                alt="An elegant Christmas dinner table decorated with candles and festive ornaments"
                 class="gallery-card_image" width="1672" height="941" loading="lazy" decoding="async">
-              <span class="gallery-card_overlay">
-                <span>View Image</span>
+              <span class="gallery-card_overlay" aria-hidden="true">
+                <span class="gallery-card_action">View Memory</span>
               </span>
             </button>
             <figcaption class="gallery-card_caption">
-              <h3>Wrapped With Love</h3>
-              <p>The joy of giving and receiving.</p>
+              <h3>A Christmas Feast</h3>
+              <p>Good food, warm company, and beautiful holiday traditions.</p>
             </figcaption>
           </figure>
 
-          <!-- Gallery Item 04 -->
           <figure class="gallery-card">
             <button type="button" class="gallery-card_button" data-gallery-open
-              data-full-src="./assets/images/gallery4.png" data-caption="Winter Memories">
-              <img src="./assets/images/gallery4.png" alt="A peaceful snowy winter village decorated for Christmas"
-                class="gallery-card_image" width="1672" height="941" loading="lazy" decoding="async">
-              <span class="gallery-card_overlay">
-                <span>View Image</span>
+              data-full-src="./assets/images/gallery4.png" data-caption="Winter Memories"
+              aria-label="View Winter Memories">
+              <img src="./assets/images/gallery4.png"
+                alt="A peaceful snowy Christmas cabin surrounded by illuminated pine trees" class="gallery-card_image"
+                width="1672" height="941" loading="lazy" decoding="async">
+              <span class="gallery-card_overlay" aria-hidden="true">
+                <span class="gallery-card_action">View Memory</span>
               </span>
             </button>
             <figcaption class="gallery-card_caption">
               <h3>Winter Memories</h3>
-              <p>Beautiful memories under the winter sky.</p>
+              <p>Beautiful moments beneath the quiet winter sky.</p>
             </figcaption>
           </figure>
         </div>
       </div>
     </section>
+
   </main>
 
   <!-- GALLERY IMAGE MODAL -->
-  <dialog class="gallery-modal" id="gallery-modal" aria-label="Gallery image preview">
+  <dialog class="gallery-modal" id="gallery-modal" aria-label="Christmas gallery preview">
     <div class="gallery-modal_content">
       <button type="button" class="gallery-modal_close" id="gallery-modal-close" aria-label="Close image preview">
         &times;
       </button>
       <img src="" alt="" class="gallery-modal_image" id="gallery-modal-image">
-      <p class="gallery-modal_caption" id="gallery-modal-caption">
-      </p>
+      <p class="gallery-modal_caption" id="gallery-modal-caption"></p>
     </div>
   </dialog>
 
+
+
   <!-- FOOTER -->
-  <footer class="site-footer">
+  <footer class="site-footer" id="footer">
     <div class="container footer_container">
-      <!-- Footer Brand -->
-      <a href="#home" class="footer_logo">
-        <span class="footer_logo-icon">✦</span>
-        <span>Christmas</span>
-      </a>
+      <div class="footer_main">
+        <a href="#home" class="footer_logo" aria-label="Back to Christmas home">
+          <span class="footer_logo-icon">✦</span>
+          <span class="footer_logo-text">Christmas</span>
+        </a>
 
-      <!-- Footer Message -->
-      <p class="footer_message">
-        May the magic of Christmas stay with you, always.
-      </p>
+        <p class="footer_tagline">A Season Wrapped in Wonder</p>
 
-      <!-- Footer Navigation -->
-      <nav class="footer_navigation" aria-label="Footer navigation">
-        <a href="#home">Home</a>
-        <a href="#countdown">The Season</a>
-        <a href="#wishes">Wishes</a>
-        <a href="#gallery">Gallery</a>
-      </nav>
-      <!-- Divider -->
+        <p class="footer_message">
+          May the magic of Christmas stay with you, always.
+        </p>
+
+        <nav class="footer_navigation" aria-label="Footer navigation">
+          <a href="#home" class="footer_navigation-link">Home</a>
+          <a href="#countdown" class="footer_navigation-link">The Season</a>
+          <a href="#wishes" class="footer_navigation-link">Wishes</a>
+          <a href="#gallery" class="footer_navigation-link">Gallery</a>
+        </nav>
+      </div>
+
       <div class="footer_divider"></div>
-      <!-- Copyright -->
+
       <div class="footer_bottom">
-        <p>
-          © <span id="current-year">2026</span>
-          Christmas Landing Page.
-          All rights reserved.
+        <p class="footer_copyright">
+          © <span id="current-year">2026</span> Christmas. All rights reserved.
         </p>
 
-        <p class="footer_credit">
-          Crafted with HTML, CSS & JavaScript.
-        </p>
+        <a href="#home" class="footer_back-to-top">
+          Back to Top <span aria-hidden="true">↑</span>
+        </a>
+
+        <p class="footer_credit">Crafted with love & Christmas magic.</p>
       </div>
     </div>
   </footer>
+
   <!-- NO JAVASCRIPT MESSAGE -->
   <noscript>
     <p class="noscript-message">
