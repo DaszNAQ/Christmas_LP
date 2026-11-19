@@ -1,0 +1,36 @@
+/* SNOWFALL */
+.snowfall_flake {
+  position: absolute;
+  top: -10vh;
+  left: var(--snow-left);
+  display: block;
+  color: rgba(255, 255, 255, 0.85);
+  font-size: var(--snow-size);
+  line-height: 1;
+  opacity: var(--snow-opacity);
+  pointer-events: none;
+  user-select: none;
+  animation: snowfall_fall var(--snow-duration) linear var(--snow-delay) infinite;
+  will-change: transform;
+  filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.25));
+}
+
+@keyframes snowfall_fall {
+  0% {
+    transform: translate3d(0, -10vh, 0) rotate(0deg);
+  }
+
+  50% {
+    transform: translate3d(var(--snow-drift-mid), 50vh, 0) rotate(180deg);
+  }
+
+  100% {
+    transform: translate3d(var(--snow-drift-end), 110vh, 0) rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .snowfall {
+    display: none;
+  }
+}
