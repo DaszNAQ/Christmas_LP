@@ -1,12 +1,17 @@
+
 import { initNavigation } from "./navigation.js";
 import { initCountdown } from "./countdown.js";
 import { initSnowfall } from "./snowfall.js";
+import { initWishGenerator } from "./wish-generator.js";
+import { initGallery } from "./gallery.js";
 
 function initApp() {
   const modules = [
     ["Navigation", initNavigation],
     ["Countdown", initCountdown],
-    ["Snowfall", initSnowfall]
+    ["Snowfall", initSnowfall],
+    ["Wish Generator", initWishGenerator],
+    ["Gallery", initGallery]
   ];
 
   modules.forEach(([name, initialize]) => {
