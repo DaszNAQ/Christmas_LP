@@ -167,7 +167,7 @@
 .countdown_message {
   margin-top: 2.5rem;
   text-align: center;
-}     
+}
 
 /* WISH STUDIO */
 .wishes_container {
@@ -411,17 +411,30 @@
     justify-content: center;
   }
 
+
   .navigation {
     position: absolute;
     top: 100%;
     left: 0;
-    display: none;
+    display: block;
     width: 100%;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateY(-10px);
+    transition:
+      opacity var(--transition-normal),
+      visibility var(--transition-normal),
+      transform var(--transition-normal);
   }
 
   .navigation.is-open {
-    display: block;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateY(0);
   }
+
 
   .navigation_list {
     flex-direction: column;
@@ -462,6 +475,7 @@
   .gallery-modal {
     width: calc(100% - 2rem);
   }
+
   .countdown_timer {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 1rem;
@@ -525,5 +539,227 @@
 
   .wish-preview_actions {
     flex-direction: column;
+  }
+}
+
+
+/* RESPONSIVE POLISH */
+@media (max-width: 1023px) {
+  .container {
+    width: calc(100% - 3rem);
+  }
+
+  .hero_container {
+    gap: 2rem;
+  }
+
+  .hero_title {
+    font-size: clamp(3rem, 6vw, 4.5rem);
+  }
+
+  .hero_visual {
+    max-width: 460px;
+  }
+
+  .countdown_timer {
+    gap: 1rem;
+  }
+
+  .wish-studio {
+    gap: 2rem;
+  }
+
+  .gallery_grid {
+    gap: 1.5rem;
+  }
+}
+
+/* TABLET */
+@media (max-width: 767px) {
+  .container {
+    width: calc(100% - 2rem);
+  }
+
+  .header_container {
+    min-height: 4.5rem;
+  }
+
+  .menu-toggle {
+    display: flex;
+  }
+
+  .navigation {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+  }
+
+  .navigation_list {
+    flex-direction: column;
+    align-items: center;
+    gap: 1.25rem;
+    padding: 1.5rem;
+  }
+
+  .hero {
+    min-height: auto;
+    padding-block: 4.5rem 6rem;
+  }
+
+  .hero_container {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+    text-align: center;
+  }
+
+  .hero_content {
+    max-width: 600px;
+    margin-inline: auto;
+  }
+
+  .hero_title {
+    font-size: clamp(3rem, 9vw, 4.5rem);
+  }
+
+  .hero_description {
+    margin-inline: auto;
+  }
+
+  .hero_actions {
+    justify-content: center;
+  }
+
+  .hero_visual {
+    max-width: 420px;
+  }
+
+  .hero_image {
+    width: min(100%, 360px);
+  }
+
+  .hero_scroll {
+    bottom: 1.25rem;
+  }
+
+  .section-heading {
+    margin-bottom: 2.5rem;
+  }
+
+  .countdown_timer {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    max-width: 500px;
+    gap: 1rem;
+  }
+
+  .countdown_item {
+    min-height: 135px;
+  }
+
+  .wish-studio {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .wish-studio_form-wrapper {
+    order: 1;
+  }
+
+  .wish-preview {
+    order: 2;
+  }
+
+  .wish-preview_card {
+    min-height: 360px;
+  }
+
+  .gallery_grid {
+    grid-template-columns: 1fr;
+    max-width: 650px;
+    margin-inline: auto;
+    gap: 2rem;
+  }
+
+  .footer_bottom {
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+  }
+}
+
+/* SMALL MOBILE */
+@media (max-width: 479px) {
+  .container {
+    width: calc(100% - 2rem);
+  }
+
+  .hero {
+    padding-block: 3.5rem 5rem;
+  }
+
+  .hero_title {
+    font-size: clamp(2.5rem, 11vw, 3.5rem);
+  }
+
+  .hero_actions {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+  }
+
+  .hero_actions .button {
+    width: 100%;
+  }
+
+  .hero_visual {
+    max-width: 340px;
+  }
+
+  .countdown_timer {
+    gap: 0.75rem;
+  }
+
+  .countdown_item {
+    min-height: 115px;
+    padding: 0.875rem 0.5rem;
+  }
+
+  .countdown_number {
+    min-height: 65px;
+    font-size: 2.5rem;
+  }
+
+  .countdown_label {
+    font-size: var(--font-size-xs);
+    letter-spacing: 0.08em;
+  }
+
+  .wish-studio_form-wrapper {
+    padding: 1.25rem;
+  }
+
+  .wish-preview_card {
+    min-height: 320px;
+    padding: 2rem 1.5rem;
+  }
+
+  .wish-preview_actions {
+    flex-direction: column;
+  }
+
+  .wish-preview_actions .button {
+    width: 100%;
+  }
+
+  .gallery_grid {
+    gap: 1.75rem;
+  }
+
+  .footer_navigation {
+    gap: 1rem;
+  }
+
+  .gallery-modal {
+    width: calc(100% - 1.5rem);
   }
 }

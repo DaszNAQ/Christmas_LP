@@ -4,6 +4,7 @@ import { initCountdown } from "./countdown.js";
 import { initSnowfall } from "./snowfall.js";
 import { initWishGenerator } from "./wish-generator.js";
 import { initGallery } from "./gallery.js";
+import { initScrollReveal } from "./scroll-reveal.js";
 
 function initApp() {
   const modules = [
@@ -11,7 +12,8 @@ function initApp() {
     ["Countdown", initCountdown],
     ["Snowfall", initSnowfall],
     ["Wish Generator", initWishGenerator],
-    ["Gallery", initGallery]
+    ["Gallery", initGallery],
+    ["Scroll Reveal", initScrollReveal]
   ];
 
   modules.forEach(([name, initialize]) => {
