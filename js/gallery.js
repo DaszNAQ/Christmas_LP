@@ -1,3 +1,4 @@
+
 export function initGallery() {
   const galleryButtons = document.querySelectorAll("[data-gallery-open]");
   const modal = document.getElementById("gallery-modal");
@@ -16,31 +17,44 @@ export function initGallery() {
     return;
   }
 
+  if (modal.dataset.initialized === "true") return;
+
   if (typeof modal.showModal !== "function") {
     console.warn("Dialog API is not supported by this browser.");
     return;
   }
 
+  modal.dataset.initialized = "true";
+
   let previousOverflow = "";
+  let activeButton = null;
 
   function openGallery(button) {
     const imageSrc = button.dataset.fullSrc;
     const caption = button.dataset.caption || "";
     const thumbnail = button.querySelector("img");
 
-    if (!imageSrc) {
+    if (!imageSrc || !thumbnail) {
       console.warn("Gallery image source is missing.");
       return;
     }
 
+    activeButton = button;
+
     modalImage.src = imageSrc;
-    modalImage.alt = thumbnail?.alt || caption;
+    modalImage.alt = thumbnail.alt || caption;
     modalCaption.textContent = caption;
+
+    modalImage.onerror = () => {
+      modalCaption.textContent = "Unable to load this image.";
+    };
 
     if (!modal.open) {
       previousOverflow = document.body.style.overflow;
       document.body.style.overflow = "hidden";
+
       modal.showModal();
+      closeButton.focus();
     }
   }
 
@@ -67,8 +81,14 @@ export function initGallery() {
   modal.addEventListener("close", () => {
     document.body.style.overflow = previousOverflow;
 
+    modalImage.onerror = null;
     modalImage.removeAttribute("src");
     modalImage.alt = "";
     modalCaption.textContent = "";
+
+    if (activeButton) {
+      activeButton.focus();
+      activeButton = null;
+    }
   });
 }

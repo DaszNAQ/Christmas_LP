@@ -1,4 +1,3 @@
-
 export function initWishGenerator() {
   const form = document.getElementById("wish-form");
   const recipientInput = document.getElementById("wish-recipient");
@@ -23,13 +22,19 @@ export function initWishGenerator() {
     !outputElement ||
     !feedbackElement ||
     !copyButton ||
-    !shareButton
+    !shareButton ||
+    !outputElement.querySelector(".wish-preview_title")
   ) {
     console.warn("Wish Generator elements could not be found.");
     return;
   }
 
+  if (form.dataset.initialized === "true") return;
+  form.dataset.initialized = "true";
+
   let currentWish = "";
+  let isActionInProgress = false;
+  let hasGeneratedWish = false;
 
   const wishMessages = {
     family: {
@@ -59,6 +64,23 @@ export function initWishGenerator() {
     feedbackElement.textContent = message;
   }
 
+  function setActionState(disabled) {
+    copyButton.disabled = disabled;
+    shareButton.disabled = disabled;
+  }
+
+  function invalidateWish() {
+    if (!currentWish) return;
+
+    currentWish = "";
+    hasGeneratedWish = false;
+
+    outputElement.removeAttribute("data-wish-text");
+    setActionState(true);
+
+    setFeedback("Your details changed. Create a new wish to continue.");
+  }
+
   function getWishMessage(recipient, mood) {
     return wishMessages[recipient]?.[mood] || "";
   }
@@ -81,8 +103,10 @@ export function initWishGenerator() {
 
     currentWish = `${greeting}\n\n${message}\n\n${signature}`;
 
-    copyButton.disabled = false;
-    shareButton.disabled = false;
+    outputElement.dataset.wishText = currentWish;
+    hasGeneratedWish = true;
+
+    setActionState(false);
   }
 
   function generateWish(event) {
@@ -94,7 +118,8 @@ export function initWishGenerator() {
 
     const message = getWishMessage(recipient, mood);
 
-    if (!message) {
+    if (!message || !recipientLabels[recipient]) {
+      invalidateWish();
       setFeedback("Unable to generate your Christmas wish.");
       return;
     }
@@ -124,22 +149,29 @@ export function initWishGenerator() {
       }
     }
 
+    if (typeof document.execCommand !== "function") {
+      throw new Error("Clipboard is not supported.");
+    }
+
     const textarea = document.createElement("textarea");
 
     textarea.value = text;
     textarea.setAttribute("readonly", "");
-    textarea.style.position = "fixed";
-    textarea.style.opacity = "0";
-    textarea.style.pointerEvents = "none";
+    textarea.style.cssText = "position:fixed;left:-9999px;top:0;opacity:0;";
 
     document.body.appendChild(textarea);
 
+    textarea.focus();
     textarea.select();
     textarea.setSelectionRange(0, textarea.value.length);
 
-    const copied = document.execCommand("copy");
+    let copied = false;
 
-    textarea.remove();
+    try {
+      copied = document.execCommand("copy");
+    } finally {
+      textarea.remove();
+    }
 
     if (!copied) {
       throw new Error("Unable to copy Christmas wish.");
@@ -147,7 +179,10 @@ export function initWishGenerator() {
   }
 
   async function handleCopy() {
-    if (!currentWish) return;
+    if (!currentWish || isActionInProgress) return;
+
+    isActionInProgress = true;
+    setActionState(true);
 
     try {
       await copyToClipboard(currentWish);
@@ -155,43 +190,56 @@ export function initWishGenerator() {
     } catch (error) {
       console.error("Copy failed:", error);
       setFeedback("Unable to copy. Please try again.");
+    } finally {
+      isActionInProgress = false;
+      setActionState(!hasGeneratedWish);
     }
   }
 
   async function handleShare() {
-    if (!currentWish) return;
+    if (!currentWish || isActionInProgress) return;
 
-    if (typeof navigator.share === "function") {
-      try {
-        await navigator.share({
-          title: "Merry Christmas!",
-          text: currentWish
-        });
-
-        setFeedback("Your Christmas wish has been shared!");
-        return;
-      } catch (error) {
-        if (error.name === "AbortError") {
-          return;
-        }
-
-        console.warn("Share failed. Trying clipboard fallback.", error);
-      }
-    }
+    isActionInProgress = true;
+    setActionState(true);
 
     try {
+      if (typeof navigator.share === "function") {
+        try {
+          await navigator.share({
+            title: "Merry Christmas!",
+            text: currentWish
+          });
+
+          setFeedback("Your Christmas wish is ready to share!");
+          return;
+        } catch (error) {
+          if (error.name === "AbortError") {
+            return;
+          }
+
+          console.warn("Share failed. Trying clipboard fallback.", error);
+        }
+      }
+
       await copyToClipboard(currentWish);
       setFeedback("Sharing is unavailable. Your wish has been copied instead!");
     } catch (error) {
-      console.error("Share fallback failed:", error);
+      console.error("Share failed:", error);
       setFeedback("Unable to share or copy. Please try again.");
+    } finally {
+      isActionInProgress = false;
+      setActionState(!hasGeneratedWish);
     }
   }
 
   form.addEventListener("submit", generateWish);
+
+  recipientInput.addEventListener("change", invalidateWish);
+  nameInput.addEventListener("input", invalidateWish);
+  moodInput.addEventListener("change", invalidateWish);
+
   copyButton.addEventListener("click", handleCopy);
   shareButton.addEventListener("click", handleShare);
 
-  copyButton.disabled = true;
-  shareButton.disabled = true;
+  setActionState(true);
 }

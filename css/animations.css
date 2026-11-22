@@ -288,3 +288,14 @@
     animation: none;
   }
 }
+
+/* SNOWFALL PERFORMANCE */
+.snowfall.is-paused .snowfall_flake {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .snowfall_flake {
+    animation: none !important;
+  }
+}

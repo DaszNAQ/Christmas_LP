@@ -1,4 +1,3 @@
-
 export function initSnowfall() {
   const container = document.getElementById("snowfall");
 
@@ -8,7 +7,6 @@ export function initSnowfall() {
   }
 
   if (container.dataset.initialized === "true") return;
-
   container.dataset.initialized = "true";
 
   const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -19,10 +17,9 @@ export function initSnowfall() {
   }
 
   function createSnowflakes() {
-    if (motionQuery.matches) {
-      container.replaceChildren();
-      return;
-    }
+    container.replaceChildren();
+
+    if (motionQuery.matches) return;
 
     const flakeCount = mobileQuery.matches ? 14 : 28;
     const fragment = document.createDocumentFragment();
@@ -39,18 +36,42 @@ export function initSnowfall() {
       flake.style.setProperty("--snow-size", `${random(8, 18)}px`);
       flake.style.setProperty("--snow-duration", `${duration.toFixed(2)}s`);
       flake.style.setProperty("--snow-delay", `${-random(0, duration).toFixed(2)}s`);
-      flake.style.setProperty("--snow-opacity", random(0.3, 0.85).toFixed(2));
+      flake.style.setProperty("--snow-opacity", random(0.3, 0.7).toFixed(2));
       flake.style.setProperty("--snow-drift-mid", `${random(-35, 35).toFixed(2)}px`);
       flake.style.setProperty("--snow-drift-end", `${random(-60, 60).toFixed(2)}px`);
 
       fragment.appendChild(flake);
     }
 
-    container.replaceChildren(fragment);
+    container.appendChild(fragment);
+    updateSnowfallState();
   }
+
+  function updateSnowfallState() {
+    container.classList.toggle("is-paused", document.hidden);
+  }
+
+  function handleMotionChange() {
+    createSnowflakes();
+  }
+
+  function handleMobileChange() {
+    createSnowflakes();
+  }
+
+  motionQuery.addEventListener("change", handleMotionChange);
+  mobileQuery.addEventListener("change", handleMobileChange);
+  document.addEventListener("visibilitychange", updateSnowfallState);
 
   createSnowflakes();
 
-  motionQuery.addEventListener("change", createSnowflakes);
-  mobileQuery.addEventListener("change", createSnowflakes);
+  return () => {
+    motionQuery.removeEventListener("change", handleMotionChange);
+    mobileQuery.removeEventListener("change", handleMobileChange);
+    document.removeEventListener("visibilitychange", updateSnowfallState);
+
+    container.replaceChildren();
+    container.classList.remove("is-paused");
+    delete container.dataset.initialized;
+  };
 }

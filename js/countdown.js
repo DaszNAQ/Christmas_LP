@@ -18,35 +18,26 @@ export function initCountdown() {
     return;
   }
 
-  let intervalId;
+  if (timerElement.dataset.initialized === "true") return;
+  timerElement.dataset.initialized = "true";
 
-  function getChristmasDate() {
-    const now = new Date();
-    const currentYear = now.getFullYear();
-    const christmasDate = new Date(currentYear, 11, 25, 0, 0, 0);
-    
+  function getChristmasState(now) {
+    const year = now.getFullYear();
+    const christmasStart = new Date(year, 11, 25, 0, 0, 0);
+    const christmasEnd = new Date(year, 11, 26, 0, 0, 0);
 
-    const isChristmasDay =
-      now.getMonth() === 11 &&
-      now.getDate() === 25;
-
-    if (isChristmasDay) {
+    if (now >= christmasStart && now < christmasEnd) {
       return {
-        date: christmasDate,
-        isChristmas: true
-      };
-    }
-
-    if (now > christmasDate) {
-      return {
-        date: new Date(currentYear + 1, 11, 25, 0, 0, 0),
-        isChristmas: false
+        isChristmas: true,
+        targetDate: null
       };
     }
 
     return {
-      date: christmasDate,
-      isChristmas: false
+      isChristmas: false,
+      targetDate: now < christmasStart
+        ? christmasStart
+        : new Date(year + 1, 11, 25, 0, 0, 0)
     };
   }
 
@@ -56,25 +47,22 @@ export function initCountdown() {
 
   function updateCountdown() {
     const now = new Date();
-    const christmas = getChristmasDate();
+    const christmas = getChristmasState(now);
 
     if (christmas.isChristmas) {
       daysElement.textContent = "00";
       hoursElement.textContent = "00";
       minutesElement.textContent = "00";
       secondsElement.textContent = "00";
-
       messageElement.textContent = "Merry Christmas!";
-
-      clearInterval(intervalId);
       return;
     }
 
-    const difference = christmas.date.getTime() - now.getTime();
+    const difference = christmas.targetDate.getTime() - now.getTime();
 
-    const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((difference / (1000 * 60 * 60)) % 24);
-    const minutes = Math.floor((difference / (1000 * 60)) % 60);
+    const days = Math.floor(difference / 86400000);
+    const hours = Math.floor((difference / 3600000) % 24);
+    const minutes = Math.floor((difference / 60000) % 60);
     const seconds = Math.floor((difference / 1000) % 60);
 
     daysElement.textContent = formatNumber(days);
@@ -86,5 +74,20 @@ export function initCountdown() {
   }
 
   updateCountdown();
-  intervalId = setInterval(updateCountdown, 1000);
+
+  const intervalId = window.setInterval(updateCountdown, 1000);
+
+  function handleVisibilityChange() {
+    if (!document.hidden) {
+      updateCountdown();
+    }
+  }
+
+  document.addEventListener("visibilitychange", handleVisibilityChange);
+
+  return () => {
+    window.clearInterval(intervalId);
+    document.removeEventListener("visibilitychange", handleVisibilityChange);
+    delete timerElement.dataset.initialized;
+  };
 }
