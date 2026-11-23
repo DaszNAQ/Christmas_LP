@@ -1,3 +1,4 @@
+
 /* SNOWFALL */
 .snowfall_flake {
   position: absolute;
@@ -10,9 +11,13 @@
   opacity: var(--snow-opacity);
   pointer-events: none;
   user-select: none;
+  transform-origin: center;
   animation: snowfall_fall var(--snow-duration) linear var(--snow-delay) infinite;
-  will-change: transform;
   filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.25));
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.35);
+}
+.snowfall.is-paused .snowfall_flake {
+  animation-play-state: paused;
 }
 
 @keyframes snowfall_fall {
@@ -26,12 +31,6 @@
 
   100% {
     transform: translate3d(var(--snow-drift-end), 110vh, 0) rotate(360deg);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .snowfall {
-    display: none;
   }
 }
 
@@ -149,27 +148,7 @@
   }
 }
 
-/* REDUCED MOTION */
-@media (prefers-reduced-motion: reduce) {
-  .hero_content > *,
-  .hero_visual,
-  .hero_image,
-  .hero_glow,
-  .hero_scroll,
-  .hero_scroll-icon {
-    animation: none !important;
-    opacity: 1;
-    transform: none;
-  }
-}
-
 /* ATMOSPHERE */
-.site-header {
-  position: sticky;
-  top: 0;
-  z-index: 100;
-}
-
 .site-header::after {
   content: "";
   position: absolute;
@@ -204,12 +183,6 @@
   pointer-events: none;
 }
 
-/* SNOWFALL POLISH */
-.snowfall_flake {
-  transform-origin: center;
-  text-shadow: 0 0 8px rgba(255, 255, 255, 0.35);
-}
-
 /* SCROLL REVEAL */
 .reveal_item {
   opacity: 0;
@@ -224,16 +197,7 @@
   transform: translateY(0);
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .reveal_item,
-  .reveal_item.is-visible {
-    opacity: 1;
-    transform: none;
-    transition: none;
-  }
-}
-
-/* GALLERY MODAL ANIMATION */
+/* GALLERY MODAL */
 .gallery-modal[open] {
   animation: gallery_modal_enter 350ms ease both;
 }
@@ -282,20 +246,31 @@
 
 /* REDUCED MOTION */
 @media (prefers-reduced-motion: reduce) {
+  .snowfall {
+    display: none;
+  }
+
+  .hero_content > *,
+  .hero_visual,
+  .hero_image,
+  .hero_glow,
+  .hero_scroll,
+  .hero_scroll-icon {
+    animation: none !important;
+    opacity: 1;
+    transform: none;
+  }
+
+  .reveal_item,
+  .reveal_item.is-visible {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
   .gallery-modal[open],
   .gallery-modal[open] .gallery-modal_content,
   .gallery-modal::backdrop {
     animation: none;
-  }
-}
-
-/* SNOWFALL PERFORMANCE */
-.snowfall.is-paused .snowfall_flake {
-  animation-play-state: paused;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .snowfall_flake {
-    animation: none !important;
   }
 }

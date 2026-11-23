@@ -2,11 +2,12 @@ export function initSnowfall() {
   const container = document.getElementById("snowfall");
 
   if (!container) {
-    console.warn("Snowfall container could not be found.");
+    console.warn("[Christmas] Snowfall container not found.");
     return;
   }
 
   if (container.dataset.initialized === "true") return;
+
   container.dataset.initialized = "true";
 
   const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -17,11 +18,18 @@ export function initSnowfall() {
   }
 
   function createSnowflakes() {
-    container.replaceChildren();
+    if (motionQuery.matches) {
+      if (container.childElementCount > 0) {
+        container.replaceChildren();
+      }
 
-    if (motionQuery.matches) return;
+      return;
+    }
 
     const flakeCount = mobileQuery.matches ? 14 : 28;
+
+    if (container.childElementCount === flakeCount) return;
+
     const fragment = document.createDocumentFragment();
 
     for (let i = 0; i < flakeCount; i++) {
@@ -36,42 +44,24 @@ export function initSnowfall() {
       flake.style.setProperty("--snow-size", `${random(8, 18)}px`);
       flake.style.setProperty("--snow-duration", `${duration.toFixed(2)}s`);
       flake.style.setProperty("--snow-delay", `${-random(0, duration).toFixed(2)}s`);
-      flake.style.setProperty("--snow-opacity", random(0.3, 0.7).toFixed(2));
+      flake.style.setProperty("--snow-opacity", random(0.3, 0.85).toFixed(2));
       flake.style.setProperty("--snow-drift-mid", `${random(-35, 35).toFixed(2)}px`);
       flake.style.setProperty("--snow-drift-end", `${random(-60, 60).toFixed(2)}px`);
 
       fragment.appendChild(flake);
     }
 
-    container.appendChild(fragment);
-    updateSnowfallState();
+    container.replaceChildren(fragment);
   }
 
-  function updateSnowfallState() {
+  function updateVisibility() {
     container.classList.toggle("is-paused", document.hidden);
   }
 
-  function handleMotionChange() {
-    createSnowflakes();
-  }
-
-  function handleMobileChange() {
-    createSnowflakes();
-  }
-
-  motionQuery.addEventListener("change", handleMotionChange);
-  mobileQuery.addEventListener("change", handleMobileChange);
-  document.addEventListener("visibilitychange", updateSnowfallState);
-
   createSnowflakes();
+  updateVisibility();
 
-  return () => {
-    motionQuery.removeEventListener("change", handleMotionChange);
-    mobileQuery.removeEventListener("change", handleMobileChange);
-    document.removeEventListener("visibilitychange", updateSnowfallState);
-
-    container.replaceChildren();
-    container.classList.remove("is-paused");
-    delete container.dataset.initialized;
-  };
+  motionQuery.addEventListener("change", createSnowflakes);
+  mobileQuery.addEventListener("change", createSnowflakes);
+  document.addEventListener("visibilitychange", updateVisibility);
 }

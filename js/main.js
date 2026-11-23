@@ -1,4 +1,3 @@
-
 import { initNavigation } from "./navigation.js";
 import { initCountdown } from "./countdown.js";
 import { initSnowfall } from "./snowfall.js";
@@ -6,7 +5,13 @@ import { initWishGenerator } from "./wish-generator.js";
 import { initGallery } from "./gallery.js";
 import { initScrollReveal } from "./scroll-reveal.js";
 
+let appInitialized = false;
+
 function initApp() {
+  if (appInitialized) return;
+
+  appInitialized = true;
+
   const modules = [
     ["Navigation", initNavigation],
     ["Countdown", initCountdown],
@@ -30,8 +35,12 @@ function initApp() {
 function updateCurrentYear() {
   const yearElement = document.getElementById("current-year");
 
-  if (yearElement) {
-    yearElement.textContent = new Date().getFullYear();
+  if (!yearElement) return;
+
+  const currentYear = String(new Date().getFullYear());
+
+  if (yearElement.textContent !== currentYear) {
+    yearElement.textContent = currentYear;
   }
 }
 
