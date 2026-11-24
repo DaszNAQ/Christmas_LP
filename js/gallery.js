@@ -1,61 +1,45 @@
-
 export function initGallery() {
-  const galleryButtons = document.querySelectorAll("[data-gallery-open]");
+  const gallery = document.getElementById("gallery");
   const modal = document.getElementById("gallery-modal");
   const closeButton = document.getElementById("gallery-modal-close");
   const modalImage = document.getElementById("gallery-modal-image");
   const modalCaption = document.getElementById("gallery-modal-caption");
 
-  if (
-    !galleryButtons.length ||
-    !modal ||
-    !closeButton ||
-    !modalImage ||
-    !modalCaption
-  ) {
-    console.warn("Gallery elements could not be found.");
+  if (!gallery || !modal || !closeButton || !modalImage || !modalCaption) {
+    console.warn("[Christmas] Gallery elements not found.");
     return;
   }
 
-  if (modal.dataset.initialized === "true") return;
+  if (gallery.dataset.initialized === "true") return;
 
   if (typeof modal.showModal !== "function") {
-    console.warn("Dialog API is not supported by this browser.");
+    console.warn("[Christmas] Dialog API is not supported.");
     return;
   }
 
-  modal.dataset.initialized = "true";
+  gallery.dataset.initialized = "true";
 
   let previousOverflow = "";
-  let activeButton = null;
+  let activeTrigger = null;
 
   function openGallery(button) {
     const imageSrc = button.dataset.fullSrc;
     const caption = button.dataset.caption || "";
     const thumbnail = button.querySelector("img");
 
-    if (!imageSrc || !thumbnail) {
-      console.warn("Gallery image source is missing.");
-      return;
-    }
+    if (!imageSrc || modal.open) return;
 
-    activeButton = button;
+    activeTrigger = button;
 
     modalImage.src = imageSrc;
-    modalImage.alt = thumbnail.alt || caption;
+    modalImage.alt = thumbnail?.alt || caption;
     modalCaption.textContent = caption;
 
-    modalImage.onerror = () => {
-      modalCaption.textContent = "Unable to load this image.";
-    };
+    previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
 
-    if (!modal.open) {
-      previousOverflow = document.body.style.overflow;
-      document.body.style.overflow = "hidden";
-
-      modal.showModal();
-      closeButton.focus();
-    }
+    modal.showModal();
+    closeButton.focus();
   }
 
   function closeGallery() {
@@ -64,31 +48,37 @@ export function initGallery() {
     }
   }
 
-  galleryButtons.forEach((button) => {
-    button.addEventListener("click", () => {
-      openGallery(button);
-    });
-  });
+  function handleGalleryClick(event) {
+    const target = event.target instanceof Element ? event.target : null;
+    const button = target?.closest("[data-gallery-open]");
 
-  closeButton.addEventListener("click", closeGallery);
+    if (!button || !gallery.contains(button)) return;
 
-  modal.addEventListener("click", (event) => {
+    openGallery(button);
+  }
+
+  function handleModalClick(event) {
     if (event.target === modal) {
       closeGallery();
     }
-  });
+  }
 
-  modal.addEventListener("close", () => {
+  function handleModalClose() {
     document.body.style.overflow = previousOverflow;
 
-    modalImage.onerror = null;
     modalImage.removeAttribute("src");
     modalImage.alt = "";
     modalCaption.textContent = "";
 
-    if (activeButton) {
-      activeButton.focus();
-      activeButton = null;
+    if (activeTrigger?.isConnected) {
+      activeTrigger.focus();
     }
-  });
+
+    activeTrigger = null;
+  }
+
+  gallery.addEventListener("click", handleGalleryClick);
+  closeButton.addEventListener("click", closeGallery);
+  modal.addEventListener("click", handleModalClick);
+  modal.addEventListener("close", handleModalClose);
 }

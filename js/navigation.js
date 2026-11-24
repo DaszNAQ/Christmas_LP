@@ -3,18 +3,18 @@ export function initNavigation() {
   const navigation = document.getElementById("primary-navigation");
 
   if (!menuButton || !navigation) {
-    console.warn("Navigation elements could not be found.");
+    console.warn("[Christmas] Navigation elements not found.");
     return;
   }
 
   if (menuButton.dataset.initialized === "true") return;
+
   menuButton.dataset.initialized = "true";
 
   const mobileQuery = window.matchMedia("(max-width: 767px)");
-  const navLinks = navigation.querySelectorAll('a[href^="#"]');
 
   function setMenuState(isOpen, returnFocus = false) {
-    const shouldOpen = Boolean(isOpen && mobileQuery.matches);
+    const shouldOpen = isOpen && mobileQuery.matches;
 
     navigation.classList.toggle("is-open", shouldOpen);
     menuButton.setAttribute("aria-expanded", String(shouldOpen));
@@ -34,13 +34,25 @@ export function initNavigation() {
   }
 
   function closeMenu() {
-    setMenuState(false);
+    if (mobileQuery.matches) {
+      setMenuState(false);
+    }
+  }
+
+  function handleNavigationClick(event) {
+    const target = event.target instanceof Element ? event.target : null;
+    const link = target?.closest('a[href^="#"]');
+
+    if (link) {
+      closeMenu();
+    }
   }
 
   function handleOutsideClick(event) {
     const isOpen = menuButton.getAttribute("aria-expanded") === "true";
 
     if (
+      !mobileQuery.matches ||
       !isOpen ||
       menuButton.contains(event.target) ||
       navigation.contains(event.target)
@@ -48,7 +60,7 @@ export function initNavigation() {
       return;
     }
 
-    closeMenu();
+    setMenuState(false);
   }
 
   function handleKeydown(event) {
@@ -59,34 +71,14 @@ export function initNavigation() {
     }
   }
 
-  function handleBreakpointChange() {
-    setMenuState(false);
-  }
-
   menuButton.addEventListener("click", toggleMenu);
+  navigation.addEventListener("click", handleNavigationClick);
   document.addEventListener("click", handleOutsideClick);
   document.addEventListener("keydown", handleKeydown);
 
-  navLinks.forEach((link) => {
-    link.addEventListener("click", closeMenu);
+  mobileQuery.addEventListener("change", () => {
+    setMenuState(false);
   });
 
-  mobileQuery.addEventListener("change", handleBreakpointChange);
-
   setMenuState(false);
-
-  return () => {
-    menuButton.removeEventListener("click", toggleMenu);
-    document.removeEventListener("click", handleOutsideClick);
-    document.removeEventListener("keydown", handleKeydown);
-
-    navLinks.forEach((link) => {
-      link.removeEventListener("click", closeMenu);
-    });
-
-    mobileQuery.removeEventListener("change", handleBreakpointChange);
-
-    delete menuButton.dataset.initialized;
-    setMenuState(false);
-  };
 }

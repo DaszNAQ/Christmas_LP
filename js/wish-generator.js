@@ -22,19 +22,26 @@ export function initWishGenerator() {
     !outputElement ||
     !feedbackElement ||
     !copyButton ||
-    !shareButton ||
-    !outputElement.querySelector(".wish-preview_title")
+    !shareButton
   ) {
-    console.warn("Wish Generator elements could not be found.");
+    console.warn("[Christmas] Wish Generator elements not found.");
     return;
   }
 
   if (form.dataset.initialized === "true") return;
+
+  const titleElement = outputElement.querySelector(".wish-preview_title");
+
+  if (!titleElement) {
+    console.warn("[Christmas] Wish preview title not found.");
+    return;
+  }
+
   form.dataset.initialized = "true";
 
   let currentWish = "";
   let isActionInProgress = false;
-  let hasGeneratedWish = false;
+  let generationVersion = 0;
 
   const wishMessages = {
     family: {
@@ -64,25 +71,25 @@ export function initWishGenerator() {
     feedbackElement.textContent = message;
   }
 
-  function setActionState(disabled) {
+  function updateActionButtons() {
+    const disabled = !currentWish || isActionInProgress;
+
     copyButton.disabled = disabled;
     shareButton.disabled = disabled;
+  }
+
+  function getWishMessage(recipient, mood) {
+    return wishMessages[recipient]?.[mood] || "";
   }
 
   function invalidateWish() {
     if (!currentWish) return;
 
     currentWish = "";
-    hasGeneratedWish = false;
+    generationVersion++;
 
-    outputElement.removeAttribute("data-wish-text");
-    setActionState(true);
-
-    setFeedback("Your details changed. Create a new wish to continue.");
-  }
-
-  function getWishMessage(recipient, mood) {
-    return wishMessages[recipient]?.[mood] || "";
+    updateActionButtons();
+    setFeedback("Your details have changed. Create your wish again.");
   }
 
   function updatePreview(recipient, name, message) {
@@ -94,19 +101,14 @@ export function initWishGenerator() {
       ? `To ${name}`
       : `To ${recipientLabels[recipient]}`;
 
-    const signature = "With Love, Christmas";
-
     recipientPreview.textContent = recipientLabel;
     messagePreview.textContent = message;
+    titleElement.textContent = greeting;
 
-    outputElement.querySelector(".wish-preview_title").textContent = greeting;
+    currentWish = `${greeting}\n\n${message}\n\nWith Love, Christmas`;
 
-    currentWish = `${greeting}\n\n${message}\n\n${signature}`;
-
-    outputElement.dataset.wishText = currentWish;
-    hasGeneratedWish = true;
-
-    setActionState(false);
+    generationVersion++;
+    updateActionButtons();
   }
 
   function generateWish(event) {
@@ -118,14 +120,12 @@ export function initWishGenerator() {
 
     const message = getWishMessage(recipient, mood);
 
-    if (!message || !recipientLabels[recipient]) {
-      invalidateWish();
+    if (!message) {
       setFeedback("Unable to generate your Christmas wish.");
       return;
     }
 
     updatePreview(recipient, name, message);
-
     setFeedback("Your Christmas wish is ready!");
 
     form.dispatchEvent(new CustomEvent("wishgenerated", {
@@ -145,7 +145,7 @@ export function initWishGenerator() {
         await navigator.clipboard.writeText(text);
         return;
       } catch (error) {
-        console.warn("Clipboard API failed. Trying fallback.", error);
+        console.warn("[Christmas] Clipboard API failed. Using fallback.", error);
       }
     }
 
@@ -157,21 +157,18 @@ export function initWishGenerator() {
 
     textarea.value = text;
     textarea.setAttribute("readonly", "");
-    textarea.style.cssText = "position:fixed;left:-9999px;top:0;opacity:0;";
+    textarea.style.position = "fixed";
+    textarea.style.opacity = "0";
+    textarea.style.pointerEvents = "none";
 
     document.body.appendChild(textarea);
 
-    textarea.focus();
     textarea.select();
     textarea.setSelectionRange(0, textarea.value.length);
 
-    let copied = false;
+    const copied = document.execCommand("copy");
 
-    try {
-      copied = document.execCommand("copy");
-    } finally {
-      textarea.remove();
-    }
+    textarea.remove();
 
     if (!copied) {
       throw new Error("Unable to copy Christmas wish.");
@@ -181,65 +178,109 @@ export function initWishGenerator() {
   async function handleCopy() {
     if (!currentWish || isActionInProgress) return;
 
+    const wish = currentWish;
+    const version = generationVersion;
+
     isActionInProgress = true;
-    setActionState(true);
+    updateActionButtons();
 
     try {
-      await copyToClipboard(currentWish);
-      setFeedback("Your Christmas wish has been copied!");
+      await copyToClipboard(wish);
+
+      if (version === generationVersion) {
+        setFeedback("Your Christmas wish has been copied!");
+      }
     } catch (error) {
-      console.error("Copy failed:", error);
-      setFeedback("Unable to copy. Please try again.");
+      console.error("[Christmas] Copy failed:", error);
+
+      if (version === generationVersion) {
+        setFeedback("Unable to copy. Please try again.");
+      }
     } finally {
       isActionInProgress = false;
-      setActionState(!hasGeneratedWish);
+      updateActionButtons();
     }
   }
 
   async function handleShare() {
     if (!currentWish || isActionInProgress) return;
 
+    const wish = currentWish;
+    const version = generationVersion;
+
     isActionInProgress = true;
-    setActionState(true);
+    updateActionButtons();
 
     try {
-      if (typeof navigator.share === "function") {
-        try {
-          await navigator.share({
-            title: "Merry Christmas!",
-            text: currentWish
-          });
+      let shared = false;
 
-          setFeedback("Your Christmas wish is ready to share!");
-          return;
+      if (typeof navigator.share === "function") {
+        const shareData = {
+          title: "Merry Christmas!",
+          text: wish
+        };
+
+        try {
+          if (
+            typeof navigator.canShare !== "function" ||
+            navigator.canShare(shareData)
+          ) {
+            await navigator.share(shareData);
+            shared = true;
+          }
         } catch (error) {
           if (error.name === "AbortError") {
             return;
           }
 
-          console.warn("Share failed. Trying clipboard fallback.", error);
+          console.warn("[Christmas] Share failed. Using clipboard fallback.", error);
         }
       }
 
-      await copyToClipboard(currentWish);
-      setFeedback("Sharing is unavailable. Your wish has been copied instead!");
+      if (shared) {
+        if (version === generationVersion) {
+          setFeedback("Your Christmas wish has been shared!");
+        }
+
+        return;
+      }
+
+      await copyToClipboard(wish);
+
+      if (version === generationVersion) {
+        setFeedback("Sharing is unavailable. Your wish has been copied instead!");
+      }
     } catch (error) {
-      console.error("Share failed:", error);
-      setFeedback("Unable to share or copy. Please try again.");
+      console.error("[Christmas] Share failed:", error);
+
+      if (version === generationVersion) {
+        setFeedback("Unable to share or copy. Please try again.");
+      }
     } finally {
       isActionInProgress = false;
-      setActionState(!hasGeneratedWish);
+      updateActionButtons();
     }
   }
 
   form.addEventListener("submit", generateWish);
 
-  recipientInput.addEventListener("change", invalidateWish);
-  nameInput.addEventListener("input", invalidateWish);
-  moodInput.addEventListener("change", invalidateWish);
+  form.addEventListener("input", (event) => {
+    if (event.target === nameInput) {
+      invalidateWish();
+    }
+  });
+
+  form.addEventListener("change", (event) => {
+    if (
+      event.target === recipientInput ||
+      event.target === moodInput
+    ) {
+      invalidateWish();
+    }
+  });
 
   copyButton.addEventListener("click", handleCopy);
   shareButton.addEventListener("click", handleShare);
 
-  setActionState(true);
+  updateActionButtons();
 }

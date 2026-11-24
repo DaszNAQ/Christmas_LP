@@ -14,12 +14,14 @@ export function initCountdown() {
     !messageElement ||
     !timerElement
   ) {
-    console.warn("Countdown elements could not be found.");
+    console.warn("[Christmas] Countdown elements not found.");
     return;
   }
 
   if (timerElement.dataset.initialized === "true") return;
   timerElement.dataset.initialized = "true";
+
+  let intervalId = null;
 
   function getChristmasState(now) {
     const year = now.getFullYear();
@@ -73,20 +75,34 @@ export function initCountdown() {
     messageElement.textContent = "Christmas is on its way!";
   }
 
-  updateCountdown();
+  function startTimer() {
+    if (intervalId !== null || document.hidden) return;
 
-  const intervalId = window.setInterval(updateCountdown, 1000);
+    updateCountdown();
+    intervalId = window.setInterval(updateCountdown, 1000);
+  }
+
+  function stopTimer() {
+    if (intervalId === null) return;
+
+    window.clearInterval(intervalId);
+    intervalId = null;
+  }
 
   function handleVisibilityChange() {
-    if (!document.hidden) {
-      updateCountdown();
+    if (document.hidden) {
+      stopTimer();
+    } else {
+      startTimer();
     }
   }
 
   document.addEventListener("visibilitychange", handleVisibilityChange);
 
+  startTimer();
+
   return () => {
-    window.clearInterval(intervalId);
+    stopTimer();
     document.removeEventListener("visibilitychange", handleVisibilityChange);
     delete timerElement.dataset.initialized;
   };
