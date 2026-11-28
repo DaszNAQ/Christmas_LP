@@ -1,4 +1,4 @@
-export function initNavigation() {
+function initNavigation() {
   const menuButton = document.getElementById("menu-toggle");
   const navigation = document.getElementById("primary-navigation");
 

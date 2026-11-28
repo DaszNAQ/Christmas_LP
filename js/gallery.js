@@ -1,4 +1,4 @@
-export function initGallery() {
+function initGallery() {
   const gallery = document.getElementById("gallery");
   const modal = document.getElementById("gallery-modal");
   const closeButton = document.getElementById("gallery-modal-close");

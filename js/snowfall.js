@@ -1,4 +1,4 @@
-export function initSnowfall() {
+function initSnowfall() {
   const container = document.getElementById("snowfall");
 
   if (!container) {

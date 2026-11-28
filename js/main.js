@@ -1,10 +1,3 @@
-import { initNavigation } from "./navigation.js";
-import { initCountdown } from "./countdown.js";
-import { initSnowfall } from "./snowfall.js";
-import { initWishGenerator } from "./wish-generator.js";
-import { initGallery } from "./gallery.js";
-import { initScrollReveal } from "./scroll-reveal.js";
-
 let appInitialized = false;
 
 function initApp() {
@@ -42,6 +35,18 @@ function updateCurrentYear() {
   if (yearElement.textContent !== currentYear) {
     yearElement.textContent = currentYear;
   }
+}
+
+function applyConfig() {
+  const setText = (selector, text) => {
+    document.querySelectorAll(selector).forEach((el) => {
+      el.textContent = text;
+    });
+  };
+
+  setText(".logo_text, .footer_logo-text", CONFIG.brand);
+  setText(".hero_description", CONFIG.heroMessage);
+  setText(".wish-preview_signature", CONFIG.signature);
 }
 
 if (document.readyState === "loading") {

@@ -1,18 +1,36 @@
 # 🎄 Christmas Landing Page
 
-✨ A festive, interactive experience celebrating the warmth, joy, and magic of Christmas.
+A free, festive landing page built with HTML, CSS and vanilla JavaScript.
 
-![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat&logo=html5&logoColor=white) ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat&logo=css3&logoColor=white) ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat&logo=javascript&logoColor=black)
+**Live demo:** https://daszNAQ.github.io/Christmas_LP/
 
-## ❄️ Features
-- ⏳ Christmas countdown with automatic yearly updates.
-- 💌 Personalized Wish Generator with Copy & Share.
-- 🖼️ Interactive Christmas photo gallery.
-- 🌨️ Animated snowfall and scroll-reveal effects.
-- 📱 Responsive design with reduced-motion support.
+## Features
+- Christmas countdown
+- Wish generator with copy and share
+- Photo gallery
+- Snowfall and scroll animations
+- Responsive, with reduced-motion support
 
-## 🛠️ Built With
-HTML5 · CSS3 · Vanilla JavaScript (ES Modules)
+## Quick start
+1. Click **Code → Download ZIP** and unzip.
+2. Open `index.html` in your browser. No installation needed.
 
-## 🚀 Run Locally
-Use a local development server, such as VS Code Live Server.
+## Customize
+- **Brand, hero message, signature:** edit `js/config.js`
+- **Photos:** replace files in `assets/images/`, keeping the same names
+- **Other text:** edit `index.html`
+- **Wish messages:** edit `js/wish-generator.js`
+- **Colors:** edit the variables at the top of `css/base.css`
+
+## Hướng dẫn nhanh (Tiếng Việt)
+1. Bấm **Code → Download ZIP**, giải nén rồi mở `index.html`.
+2. Đổi tên thương hiệu, lời giới thiệu, chữ ký trong `js/config.js`.
+3. Thay ảnh trong `assets/images/` (giữ nguyên tên file).
+4. Bạn được dùng, sửa và chia sẻ miễn phí, **không được bán lại**.
+
+## License
+Free to use, modify and share. **Reselling is not allowed.** See [LICENSE](LICENSE).
+
+Images were generated with AI. Fonts are loaded from Google Fonts.
+
+Made by **DaszNAQ**

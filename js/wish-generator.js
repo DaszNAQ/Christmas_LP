@@ -1,4 +1,4 @@
-export function initWishGenerator() {
+function initWishGenerator() {
   const form = document.getElementById("wish-form");
   const recipientInput = document.getElementById("wish-recipient");
   const nameInput = document.getElementById("wish-name");
@@ -105,7 +105,7 @@ export function initWishGenerator() {
     messagePreview.textContent = message;
     titleElement.textContent = greeting;
 
-    currentWish = `${greeting}\n\n${message}\n\nWith Love, Christmas`;
+    currentWish = `${greeting}\n\n${message}\n\nfunction${CONFIG.signature}`;
 
     generationVersion++;
     updateActionButtons();

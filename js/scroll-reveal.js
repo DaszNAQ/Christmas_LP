@@ -1,4 +1,4 @@
-export function initScrollReveal() {
+function initScrollReveal() {
   const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
 
   if (motionQuery.matches || !("IntersectionObserver" in window)) {

@@ -1,4 +1,4 @@
-export function initCountdown() {
+function initCountdown() {
   const daysElement = document.getElementById("countdown-days");
   const hoursElement = document.getElementById("countdown-hours");
   const minutesElement = document.getElementById("countdown-minutes");
