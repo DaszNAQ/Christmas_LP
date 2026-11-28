@@ -37,7 +37,6 @@ function initSnowfall() {
       const duration = random(12, 24);
 
       flake.className = "snowfall_flake";
-      flake.textContent = "❄";
       flake.setAttribute("aria-hidden", "true");
 
       flake.style.setProperty("--snow-left", `${random(0, 100)}%`);

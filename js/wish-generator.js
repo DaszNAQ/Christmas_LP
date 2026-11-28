@@ -105,7 +105,7 @@ function initWishGenerator() {
     messagePreview.textContent = message;
     titleElement.textContent = greeting;
 
-    currentWish = `${greeting}\n\n${message}\n\nfunction${CONFIG.signature}`;
+    currentWish = `${greeting}\n\n${message}\n\n${CONFIG.signature}`;
 
     generationVersion++;
     updateActionButtons();

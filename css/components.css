@@ -299,7 +299,6 @@
 }
 
 .countdown_item::before {
-  content: "✦";
   position: absolute;
   top: 12px;
   right: 14px;
@@ -443,7 +442,6 @@
 
 .wish-preview_card::before,
 .wish-preview_card::after {
-  content: "✦";
   position: absolute;
   color: var(--color-champagne);
   font-size: 1.25rem;
